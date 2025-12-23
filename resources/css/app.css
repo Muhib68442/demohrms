@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.btn-blue {
+    @apply text-blue-500 hover:text-white dark:text-blue-500 dark:hover:text-white 
+           text-sm font-semibold border border-blue-500 hover:border-blue-700 
+           dark:border-blue-500 dark:hover:border-blue-700 px-4 py-2 rounded-lg 
+           transition ease-in-out duration-150 hover:bg-blue-500 dark:hover:bg-blue-500;
+}
+
+.alert{
+    @apply p-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800 rounded-lg w-[95%] mx-auto mt-4 mb-2;
+
+}
+.alert-success{
+    @apply p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800;
+}
+
+.alert-danger{
+    @apply p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800;
+}
