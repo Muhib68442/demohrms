@@ -40,6 +40,10 @@
 .dataTables_filter label input {
     @apply bg-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300;
 }
+
+.dataTables_length {
+    @apply mr-6;
+}
 .dataTables_length select {
     @apply min-w-[70px] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-gray-200 dark:bg-gray-600;
 }
@@ -82,4 +86,35 @@
 
 .dataTables_length label {
     @apply text-gray-700 dark:text-white;
+}
+
+/* .dt-button {
+    @apply px-3 py-1 rounded-md border bg-white text-gray-700 
+           border-gray-300 transition 
+           hover:bg-blue-500 hover:text-white 
+           dark:bg-gray-700 dark:text-gray-300 dark:border-gray-600 
+           dark:hover:bg-blue-500 dark:hover:text-white;
+} */
+
+.dt-button {
+    background-color: #dddddd !important;
+    color: #212121 !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
+}
+
+.dt-button:hover {
+    background-color: #274d8a !important;
+}
+.dark .dt-button {
+    background-color: #1f2937 !important;
+    color: #fff !important;
+    border: none !important;
+    padding: 8px 16px !important;
+    border-radius: 4px !important;
+    cursor: pointer !important;
+    transition: background-color 0.3s ease !important;
 }

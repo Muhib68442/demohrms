@@ -14,6 +14,7 @@
         "khatabwedaa/blade-css-icons": "^1.5",
         "laravel/framework": "^12.0",
         "laravel/tinker": "^2.10.1",
+        "yajra/laravel-datatables-buttons": "^12.3",
         "yajra/laravel-datatables-oracle": "^12.6"
     },
     "require-dev": {

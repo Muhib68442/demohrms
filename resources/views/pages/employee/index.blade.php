@@ -18,7 +18,7 @@
 
         <div class=" relative overflow-x-auto shadow-md sm:rounded-lg  mt-4  p-4  ">
 
-            <div class='flex items-center gap-4 justify-center'>
+            <div class='flex items-center gap-4 justify-center mb-6'>
                 <div class='flex items-center gap-2'>
                     <x-input-label for="status" :value="__('Status')" />
                     <select name="status" id="filterStatus" class='input-select'>
@@ -42,11 +42,14 @@
 
 
 
-            <table class="min-w-full divide-y divide-gray-200  table-stripe " id="employeeTable">
+            <table class="min-w-full divide-y divide-gray-200  table-stripe mt-4" id="employeeTable">
                 <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
                         <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
                             #
+                        </th>
+                        <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
+                            Image
                         </th>
                         <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
                             Name
@@ -59,9 +62,6 @@
                         </th>
                         <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
                             Status
-                        </th>
-                        <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
-                            Image
                         </th>
                         <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
                             Action
@@ -115,8 +115,32 @@
 
 
 </x-app-layout>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+{{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.dataTables.min.css">
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script> --}}
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Datatables core -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+<!-- Buttons Extension -->
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.print.min.js"></script>
+
+<!-- ColVis button -->
+<script src="https://cdn.datatables.net/buttons/2.4.2/js/buttons.colVis.min.js"></script>
+
+
 <script>
     $(document).ready(function () {
         console.log("ready!");
@@ -131,10 +155,16 @@
                 }
             },
             columns: [
-
                 { 
                     data: 'DT_RowIndex', 
                     name: 'id' 
+                },
+                {
+                    data : 'image',
+                    name: 'image',
+                    defaultContent: '--',
+                    orderable: false,
+                    searchable: false
                 },
                 {
                     data : 'name',
@@ -159,13 +189,6 @@
                     searchable: false
                 }
                 ,{
-                    data : 'image',
-                    name: 'image',
-                    defaultContent: '--',
-                    orderable: false,
-                    searchable: false
-                }
-                ,{
                     data : 'action',
                     name: 'action',
                     defaultContent: '--',
@@ -176,7 +199,46 @@
             language: {
                 search: "Search",
                 searchPlaceholder: "Type name or email..."
-            }
+            },
+            dom: '<"top"lBf>rt<"bottom"ip>',
+            // B = Buttons, l = lengthMenu dropdown, f = search box, r = processing, t = table, i = info, p = pagination
+            
+           
+            buttons: [
+                {
+                    extend: 'copy',
+                    text: `Copy`
+                },
+                {
+                    extend: 'csv',
+                    text: `CSV`
+                },
+                {
+                    extend: 'excel',
+                    text: `Excel`
+                },
+                {
+                    extend: 'pdf',
+                    text: `PDF`
+                },
+                {
+                    extend: 'print',
+                    text: `Print`
+                },
+                {
+                    text: `Reload`,
+                    action: function ( e, dt, node, config ) {
+                        dt.ajax.reload();
+                    }
+                },
+                {
+                    extend: 'colvis',
+                    text: `View`
+                },
+            ],
+
+            lengthMenu: [ [10, 20, 30, 40], [10, 20, 30, 40] ],
+            pageLength: 10, // default show
         });
 
         $("#refresh").click(function(){
