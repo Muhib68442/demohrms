@@ -9,14 +9,77 @@
            transition ease-in-out duration-150 hover:bg-blue-500 dark:hover:bg-blue-500;
 }
 
-.alert{
+.alert {
     @apply p-4 text-sm text-blue-700 bg-blue-100 rounded-lg dark:bg-blue-200 dark:text-blue-800 rounded-lg w-[95%] mx-auto mt-4 mb-2;
-
 }
-.alert-success{
+.alert-success {
     @apply p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800;
 }
 
-.alert-danger{
+.alert-danger {
     @apply p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800;
+}
+
+.input-select {
+    @apply block min-w-[200px] text-sm font-medium text-gray-900 dark:text-white
+    px-2 py-2 w-full text-gray-900 bg-gray-50 rounded-lg border border-gray-300 
+    focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 
+    dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 
+    dark:focus:border-blue-500;
+}
+.back-btn {
+    @apply p-2 rounded-md hover:bg-gray-300 transition dark:hover:bg-gray-600 dark:text-white;
+}
+
+.dataTables_filter {
+    @apply mb-4;
+}
+.dataTables_filter label {
+    @apply font-semibold text-gray-700 dark:text-white;
+}
+.dataTables_filter label input {
+    @apply bg-gray-200 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300;
+}
+.dataTables_length select {
+    @apply min-w-[70px] rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-300 bg-gray-200 dark:bg-gray-600;
+}
+
+#employeeTable tbody tr td {
+    @apply text-black dark:text-white;
+}
+
+/* Pagination wrapper */
+.dataTables_wrapper .dataTables_paginate {
+    @apply flex justify-center mt-4 space-x-1;
+}
+
+/* Pagination buttons */
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    @apply px-3 py-1 rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-blue-500 hover:text-white transition;
+}
+/* Active page */
+.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    @apply bg-blue-500 text-white border-blue-500;
+}
+/* Disabled button */
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    @apply opacity-50 cursor-not-allowed bg-gray-200 text-gray-400 border-gray-300;
+}
+/* Dark mode */
+.dark .dataTables_wrapper .dataTables_paginate .paginate_button {
+    @apply bg-gray-700 text-gray-300 border-gray-600 hover:bg-blue-500 hover:text-white;
+}
+.dark .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+    @apply bg-blue-500 text-white border-blue-500;
+}
+
+#employeeTable_info {
+    @apply text-gray-700 dark:text-white;
+}
+.ellipsis {
+    @apply text-gray-600 dark:text-white;
+}
+
+.dataTables_length label {
+    @apply text-gray-700 dark:text-white;
 }

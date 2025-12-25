@@ -18,11 +18,35 @@
 
         <div class=" relative overflow-x-auto shadow-md sm:rounded-lg  mt-4  p-4  ">
 
-            <table class="min-w-full divide-y divide-gray-200  table-stripe ">
+            <div class='flex items-center gap-4 justify-center'>
+                <div class='flex items-center gap-2'>
+                    <x-input-label for="status" :value="__('Status')" />
+                    <select name="status" id="filterStatus" class='input-select'>
+                        <option value="">All</option>
+                        <option value="active" {{ old('status') == 'active' ? 'selected' : '' }}>Active</option>
+                        <option value="inactive" {{ old('status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                    </select>
+                </div>
+
+                <div class='flex items-center gap-2'>
+                    <x-input-label for="gender" :value="__('Gender')" />
+                    <select name="gender" id="filterGender" class='input-select'>
+                        <option value="">All</option>
+                        <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
+                        <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
+                    </select>
+                </div>
+
+                <button id='refresh' class='p-2 bg-gray-200 rounded dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700'>{{ svg('css-spinner', 'w-5 h-5') }}</button>
+            </div>
+
+
+
+            <table class="min-w-full divide-y divide-gray-200  table-stripe " id="employeeTable">
                 <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
                         <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
-                            ID
+                            #
                         </th>
                         <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
                             Name
@@ -45,7 +69,7 @@
                     </tr>
                 </thead>
 
-                <tbody class="bg-white divide-y divide-gray-200">
+                {{-- <tbody class="bg-white divide-y divide-gray-200">
                     @foreach ($employees as $employee)
                         <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600 transition duration-150 ease-in-out">
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-gray-300">
@@ -79,11 +103,11 @@
                             </td>
                         </tr>
                     @endforeach
-                </tbody>
+                </tbody> --}}
             </table>
 
             
-            {{$employees->links()}}
+            {{-- {{$employees->links()}} --}}
         </div>
 
     </x-slot>
@@ -91,3 +115,73 @@
 
 
 </x-app-layout>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+    $(document).ready(function () {
+        console.log("ready!");
+        $('#employeeTable').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: {
+                url : "{{ route('employees.index') }}",
+                data: function(d){
+                    d.filterStatus = $('#filterStatus').val();
+                    d.filterGender = $('#filterGender').val();
+                }
+            },
+            columns: [
+
+                { 
+                    data: 'DT_RowIndex', 
+                    name: 'id' 
+                },
+                {
+                    data : 'name',
+                    name: 'name',
+                    defaultContent: '--'
+                },
+                {
+                    data : 'email',
+                    name: 'email',
+                    defaultContent: '--'
+                }
+                ,{
+                    data : 'phone',
+                    name: 'phone',
+                    defaultContent: '--'
+                }
+                ,{
+                    data : 'status',
+                    name: 'status',
+                    defaultContent: '--',
+                    orderable: false,
+                    searchable: false
+                }
+                ,{
+                    data : 'image',
+                    name: 'image',
+                    defaultContent: '--',
+                    orderable: false,
+                    searchable: false
+                }
+                ,{
+                    data : 'action',
+                    name: 'action',
+                    defaultContent: '--',
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            language: {
+                search: "Search",
+                searchPlaceholder: "Type name or email..."
+            }
+        });
+
+        $("#refresh").click(function(){
+            $('#employeeTable').DataTable().ajax.reload();
+        });
+    });
+
+</script>

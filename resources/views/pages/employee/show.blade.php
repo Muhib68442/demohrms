@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3">
-            <a href="{{ route('employees.index') }}" class="p-2 rounded-md hover:bg-gray-700 transition dark:hover:bg-gray-600 dark:text-white">
+            <a href="{{ route('employees.index') }}" class="back-btn">
                 {{ svg('css-chevron-left', 'w-6 h-6') }}
             </a>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">

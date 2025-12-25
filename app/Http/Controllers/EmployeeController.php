@@ -4,15 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Models\Employee;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class EmployeeController extends Controller
 {
     // VIEW EMPLOYEES INDEX
-    public function index()
+    // public function index()
+    // {
+    //     $employees = Employee::paginate(10);
+    //     return view('pages.employee.index', compact('employees'));
+    // }
+    public function index(Request $request)
     {
-        $employees = Employee::paginate(10);
-        return view('pages.employee.index', compact('employees'));
+        if ($request->ajax()) {
+            $query = Employee::select('id','name','email','phone','address','gender','status','image_url');
+
+            if($request->filterStatus){
+                $query->where('status', $request->filterStatus);
+            }
+            if($request->filterGender){
+                $query->where('gender', $request->filterGender);
+            }
+
+            return DataTables::of($query)
+                ->addIndexColumn(true)
+                ->addColumn('image', function($row){
+                    return '<img src="' . asset('images/demo.jpg') . '" width="50" height="50" class="img-thumbnail rounded-full" />';
+                })
+                ->addColumn('action', function($row){
+                    return 
+                        '<a class="px-2 py-2 text-blue-500 hover:bg-blue-500 hover:text-white rounded-md transition" href="'.route('employees.show', $row->id).'">View</a>
+                        <a class="px-2 py-2 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-md transition" href="'.route('employees.edit', $row->id).'">Edit</a>
+                        <form action="'.route('employees.destroy', $row->id).'" method="POST" class="inline-block">
+                            '.csrf_field().'
+                            '.method_field("DELETE").'
+                            <button type="submit" class="px-2 py-2 text-red-500 hover:bg-red-500 hover:text-white rounded-md transition">Delete</button>
+                        </form>';
+                })
+                ->addColumn('status', function($row){
+                    $bg = $row->status == 'active' ? 'bg-green-500 text-green-100' : 'bg-red-500 text-red-100';
+                    return '<span class="px-2 py-1 '.$bg.' rounded-lg">'.ucfirst($row->status).'</span>';
+                })
+                ->rawColumns(['image', 'action', 'status'])
+                ->make(true);
+        }
+
+        return view('pages.employee.index');
     }
+    
 
     // CREATE EMPLOYEE (FORM)
     public function create()
