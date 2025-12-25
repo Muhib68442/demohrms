@@ -107,7 +107,8 @@
 }
 
 .dt-button:hover {
-    background-color: #274d8a !important;
+    background-color: #818181 !important;
+    color: #fff !important;
 }
 .dark .dt-button {
     background-color: #1f2937 !important;

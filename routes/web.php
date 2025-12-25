@@ -1,9 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\DepartmentController;
+use App\Http\Controllers\PermissionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -39,3 +42,16 @@ Route::post('departments/{id}/restore', [DepartmentController::class, 'restore']
 Route::delete('departments/forceDelete/{id}', [DepartmentController::class, 'permanentDelete'])->name('departments.forceDelete')->middleware('auth');
 
 Route::resource('departments', DepartmentController::class)->middleware('auth');
+
+
+Route::patch('users/status/{user}', [UserController::class, 'toogleStatus'])->name('users.status')->middleware('auth');
+
+Route::get('users/trash', [UserController::class, 'trash'])->name('users.trash')->middleware('auth');
+Route::post('users/{user}/restore', [UserController::class, 'restore'])->name('users.restore')->middleware('auth');
+Route::delete('users/forceDelete/{user}', [UserController::class, 'permanentDelete'])->name('users.forceDelete')->middleware('auth');
+Route::resource('users', UserController::class)->middleware('auth');
+
+
+Route::resource('roles', RoleController::class)->middleware('auth');
+
+Route::resource('permissions', PermissionController::class)->middleware('auth');
