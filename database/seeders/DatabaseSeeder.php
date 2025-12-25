@@ -3,9 +3,10 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
-use Illuminate\Database\Seeder;
 use App\Models\Employee;
+use Illuminate\Database\Seeder;
+use Database\Seeders\DepartmentSeeder;
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class DatabaseSeeder extends Seeder
 {
@@ -24,5 +25,8 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         Employee::factory(20000)->create();
+        $this->call([
+            DepartmentSeeder::class,
+        ]);
     }
 }
