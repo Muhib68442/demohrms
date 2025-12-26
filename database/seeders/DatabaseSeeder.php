@@ -24,8 +24,9 @@ class DatabaseSeeder extends Seeder
         //     'email' => 'test@example.com',
         // ]);
 
-        Employee::factory(20000)->create();
+        // Employee::factory(20000)->create();
         $this->call([
+            EmployeeSeeder::class,
             DepartmentSeeder::class,
         ]);
     }

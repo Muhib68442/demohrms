@@ -24,15 +24,28 @@
                 <div class="mb-4">
                     <x-input-label :value="__('Assign Permissions')" />
                     
-                    @if($permissions->count() > 0)
-                        <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
-                            @foreach($permissions as $permission)
-                                <label class="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition">
-                                    <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" 
-                                           class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                                           {{ in_array($permission->id, old('permissions', [])) ? 'checked' : '' }}>
-                                    <span class="ml-3 text-sm text-gray-900 dark:text-gray-300">{{ $permission->name }}</span>
-                                </label>
+                    @if($groupedPermissions->count() > 0)
+                        <div class="mt-3 space-y-6">
+                            @foreach($groupedPermissions as $module => $permissions)
+                                <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                                    <!-- Module Header -->
+                                    <h4 class="font-semibold text-gray-800 dark:text-gray-200 mb-3 flex items-center gap-2">
+                                        {{ svg('css-folder', 'w-5 h-5 text-indigo-600 dark:text-indigo-400') }}
+                                        {{ $module }}
+                                    </h4>
+                                    
+                                    <!-- Permissions Grid -->
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 ml-7">
+                                        @foreach($permissions as $permission)
+                                            <label class="flex items-center p-3 bg-white dark:bg-gray-800 rounded-md hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition">
+                                                <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" 
+                                                    class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                                    {{ in_array($permission->id, old('permissions', [])) ? 'checked' : '' }}>
+                                                <span class="ml-3 text-sm text-gray-900 dark:text-gray-300">{{ $permission->name }}</span>
+                                            </label>
+                                        @endforeach
+                                    </div>
+                                </div>
                             @endforeach
                         </div>
                     @else

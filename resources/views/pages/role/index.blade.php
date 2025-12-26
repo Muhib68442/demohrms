@@ -10,7 +10,11 @@
 
 
             <x-anchor_button href="{{ route('permissions.create') }}" variant='secondary'>
-                {{ svg('css-add', 'w-6 h-6') }} Add Permission
+                {{ svg('css-play-list-add', 'w-6 h-6') }} Add Permission
+            </x-anchor_button>
+
+            <x-anchor_button href="{{ route('permissions.index') }}" variant='secondary'>
+                {{ svg('css-lock', 'w-6 h-6') }} Permissions
             </x-anchor_button>
         </div>
     </x-slot>

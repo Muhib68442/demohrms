@@ -63,6 +63,18 @@
 
                     </div>
 
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <!-- Role -->
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+                            <div class="flex items-center gap-3 mb-2">
+                                {{ svg('css-user', 'w-5 h-5 text-indigo-600 dark:text-indigo-400') }}
+                                <h4 class="font-semibold text-gray-700 dark:text-gray-300">Role</h4>
+                            </div>
+                            <p class="text-gray-900 dark:text-gray-100 ml-8">{{ $user->roles->pluck('name')->implode(', ') }}</p>
+                        </div>
+                    </div>
+
+
                     <!-- Action Buttons -->
                     <div class="flex gap-3 mt-8 justify-end">
                         <form action="{{route('users.status', $user->id)}}" method="post">

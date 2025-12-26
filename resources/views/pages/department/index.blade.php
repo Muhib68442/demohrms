@@ -4,12 +4,16 @@
             {{ __('All Departments') }}
         </h2>
         <div class="flex items-center gap-4">
+            @can('create department')
             <x-anchor_button href="{{ route('departments.create') }}" variant='secondary'>
                 {{ svg('css-add', 'w-6 h-6') }} Add Department
             </x-anchor_button>
+            @endcan
+            @can('restore department')
             <x-anchor_button href="{{ route('departments.trash') }}" variant='secondary'>
                 {{ svg('css-trash', 'w-6 h-6') }}
             </x-anchor_button>
+            @endcan
         </div>
     </x-slot>
 
@@ -42,9 +46,12 @@
                                 </span>
                             </td>
                             <td class="px-6 py-4 text-sm font-medium flex items-center gap-2">
+                                @can('edit department')
                                 <a href="{{ route('departments.edit', $department->id) }}" class="px-2 py-2 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-md transition">
                                     Edit
                                 </a>
+                                @endcan
+                                @can('delete department')
                                 <form action="{{ route('departments.destroy', $department->id) }}" method="post" class="inline-block" onsubmit="return confirm('Delete this department?')">
                                     @csrf
                                     @method('DELETE')
@@ -52,6 +59,7 @@
                                         Delete
                                     </button>
                                 </form>
+                                @endcan
                             </td>
                         </tr>
                     @empty

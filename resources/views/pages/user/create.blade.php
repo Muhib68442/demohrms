@@ -53,6 +53,28 @@
                     <x-input-error :messages="$errors->get('status')" class="mt-2" />
                 </div>
 
+                <!-- Roles -->
+                <div class="mb-4">
+                    <x-input-label :value="__('Assign Roles')" />
+                    
+                    @if($roles->count() > 0)
+                        <div class="mt-3 grid grid-cols-1 md:grid-cols-2 gap-3">
+                            @foreach($roles as $role)
+                                <label class="flex items-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-600 cursor-pointer transition">
+                                    <input type="checkbox" name="roles[]" value="{{ $role->id }}" 
+                                        class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                        {{ in_array($role->id, old('roles', [])) ? 'checked' : '' }}>
+                                    <span class="ml-3 text-sm text-gray-900 dark:text-gray-300">{{ $role->name }}</span>
+                                </label>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-sm text-gray-500 mt-2">No roles available. Create roles first.</p>
+                    @endif
+                    
+                    <x-input-error :messages="$errors->get('roles')" class="mt-2" />
+                </div>
+
                 <!-- Submit Button -->
                 <div class="flex justify-end mt-4">
                     <x-primary-button>

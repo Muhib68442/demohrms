@@ -32,14 +32,24 @@ class EmployeeController extends Controller
                     return '<img src="' . asset('images/demo.jpg') . '" width="50" height="50" class="img-thumbnail rounded-full" />';
                 })
                 ->addColumn('action', function($row){
-                    return 
-                        '<a class="px-2 py-2 text-blue-500 hover:bg-blue-500 hover:text-white rounded-md transition" href="'.route('employees.show', $row->id).'">View</a>
-                        <a class="px-2 py-2 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-md transition" href="'.route('employees.edit', $row->id).'">Edit</a>
-                        <form action="'.route('employees.destroy', $row->id).'" method="POST" class="inline-block">
+                    $btn = '';
+                    if(auth()->user()->can('view employee')){
+                        $btn .= '<a class="px-2 py-2 text-blue-500 hover:bg-blue-500 hover:text-white rounded-md transition" href="'.route('employees.show', $row->id).'">View</a>';
+                    } 
+
+                    if(auth()->user()->can('edit employee')){
+                        $btn .= '<a class="px-2 py-2 text-yellow-500 hover:bg-yellow-500 hover:text-white rounded-md transition" href="'.route('employees.edit', $row->id).'">Edit</a>';
+                    }
+
+                    if(auth()->user()->can('delete employee')){
+                        $btn .= '<form action="'.route('employees.destroy', $row->id).'" method="POST" class="inline-block">
                             '.csrf_field().'
                             '.method_field("DELETE").'
                             <button type="submit" class="px-2 py-2 text-red-500 hover:bg-red-500 hover:text-white rounded-md transition">Delete</button>
                         </form>';
+                    }
+
+                    return $btn;
                 })
                 ->addColumn('status', function($row){
                     $bg = $row->status == 'active' ? 'bg-green-500 text-green-100' : 'bg-red-500 text-red-100';

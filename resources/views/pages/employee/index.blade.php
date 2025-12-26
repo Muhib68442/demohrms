@@ -7,8 +7,12 @@
         <div class="flex items-center gap-4">
             {{-- <a class="btn-blue" href="{{ route('employees.create') }}">Add Employee</a> --}}
             {{-- <a href="{{ route('employees.trash') }}">{{ svg('css-trash', 'w-6 h-6') }}</a> --}}
+            @can('create employee')
             <x-anchor_button href="{{ route('employees.create') }}" variant='secondary'>{{ svg('css-add', 'w-4 h-4') }} Add Employee</x-anchor_button>
+            @endcan
+            @can('restore employee')
             <x-anchor_button href="{{ route('employees.trash') }}" variant='secondary'>{{ svg('css-trash', 'w-4 h-4') }}</x-anchor_button>
+            @endcan
         </div>
     </x-slot>
 
@@ -42,7 +46,7 @@
 
 
 
-            <table class="min-w-full divide-y divide-gray-200  table-stripe mt-4" id="employeeTable">
+            <table class="min-w-full divide-y divide-gray-200  table-stripe mt-4" id="table">
                 <thead class="bg-gray-50 dark:bg-gray-700">
                     <tr>
                         <th class="px-6 py-4 text-xs font-medium text-gray-900 dark:text-gray-300 text-left">
@@ -144,7 +148,7 @@
 <script>
     $(document).ready(function () {
         console.log("ready!");
-        $('#employeeTable').DataTable({
+        $('#table').DataTable({
             processing: true,
             serverSide: true,
             ajax: {
@@ -242,7 +246,7 @@
         });
 
         $("#refresh").click(function(){
-            $('#employeeTable').DataTable().ajax.reload();
+            $('#table').DataTable().ajax.reload();
         });
     });
 

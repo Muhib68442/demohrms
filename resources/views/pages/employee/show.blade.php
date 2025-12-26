@@ -93,6 +93,7 @@
 
                     <!-- Action Buttons -->
                     <div class="flex gap-3 mt-8 justify-end">
+                        @can('edit employee')
                         <form action="{{route('employees.status', $employee->id)}}" method="post">
                             @csrf
                             @method('PATCH')
@@ -102,14 +103,17 @@
                                 {{ $employee->status == 'active' ? 'Deactivate' : 'Activate' }}
                             </button>   
                         </form>
+                        @endcan
 
                         
+                        @can('edit employee')
                         <x-secondary-button href="{{ route('employees.edit', $employee->id) }}">
                             {{ svg('css-pen', 'w-5 h-5') }}
                             Edit
                         </x-secondary-button>
+                        @endcan
                         
-                        
+                         @can('delete employee')
                         <form action="{{ route('employees.destroy', $employee->id) }}" method="POST" class='inline-block'
                               onsubmit="return confirm('Are you sure you want to delete this employee?')">
                             @csrf
@@ -120,6 +124,7 @@
                             </x-danger-button>
                             
                         </form>
+                        @endcan
                     </div>
                 </div>
 

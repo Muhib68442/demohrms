@@ -19,7 +19,12 @@ class RoleController extends Controller
     public function create()
     {
         $permissions = Permission::all();
-        return view('pages.role.create', compact('permissions'));
+        $groupedPermission = $permission->groupBy(function($permission) {
+            // 'create user' => pick only the last word 'user'
+            $parts = explode(' ', $permission->name);
+            return end($parts);
+        });
+        return view('pages.role.create', compact('groupedPermission'));
     }
 
     // STORE
@@ -34,7 +39,6 @@ class RoleController extends Controller
         $role = Role::create(['name' => $data['name']]);
         
         if(isset($data['permissions'])) {
-            // ID থেকে permission names নাও
             $permissionNames = Permission::whereIn('id', $data['permissions'])->pluck('name');
             $role->syncPermissions($permissionNames);
         }
@@ -49,7 +53,15 @@ class RoleController extends Controller
     {
         $permissions = Permission::all();
         $rolePermissions = $role->permissions->pluck('id')->toArray();
-        return view('pages.role.edit', compact('role', 'permissions', 'rolePermissions'));
+
+        // Group permissions by module
+        $groupedPermissions = $permissions->groupBy(function($permission) {
+            // 'create user' => pick only the last word 'user'
+            $parts = explode(' ', $permission->name);
+            return ucfirst(end($parts));    // 'user' -> 'User'
+        });
+
+        return view('pages.role.edit', compact('role', 'groupedPermissions', 'rolePermissions'));
     }
 
     // UPDATE
@@ -64,7 +76,6 @@ class RoleController extends Controller
         $role->update(['name' => $data['name']]);
         
         if(isset($data['permissions'])) {
-            // ID থেকে permission names নাও
             $permissionNames = Permission::whereIn('id', $data['permissions'])->pluck('name');
             $role->syncPermissions($permissionNames);
         } else {
